@@ -11,23 +11,23 @@ def card_deal():
 def score_comparison(player, computer):
     if (sum(player) > sum(computer)) and (sum(player) > 21):
         print(f"Your final hand: {player}, final score: {sum(player)}")
-        print(f"Computer's final hand: {computer}, final score {sum(computer)}")
+        print(f"Computer's final hand: {computer}, final score: {sum(computer)}")
         print("You went over, You lose.")
     elif sum(player) > sum(computer):
         print(f"Your final hand: {player}, final score: {sum(player)}")
-        print(f"Computer's final hand: {computer}, final score {sum(computer)}")
+        print(f"Computer's final hand: {computer}, final score: {sum(computer)}")
         print("You Win!")
     elif (sum(player) < sum(computer)) and (sum(computer) > 21):
         print(f"Your final hand: {player}, final score: {sum(player)}")
-        print(f"Computer's final hand: {computer}, final score {sum(computer)}")
+        print(f"Computer's final hand: {computer}, final score: {sum(computer)}")
         print("Opponent went over, You Win!")
     elif sum(player) < sum(computer):
         print(f"Your final hand: {player}, final score: {sum(player)}")
-        print(f"Computer's final hand: {computer}, final score {sum(computer)}")
+        print(f"Computer's final hand: {computer}, final score: {sum(computer)}")
         print("You Lose.")
     else:
         print(f"Your final hand: {player}, final score: {sum(player)}")
-        print(f"Computer's final hand: {computer}, final score {sum(computer)}")
+        print(f"Computer's final hand: {computer}, final score: {sum(computer)}")
         print("It's a draw.")
 
 
@@ -52,7 +52,10 @@ def game():
         should_continue = input("Type 'y' to draw another card, type 'n' to pass: ")
         if should_continue == "y":
             player_cards.append(card_deal())
-            if sum(player_cards) > 21:
+            if (sum(player_cards) > 21) and (11 in player_cards):
+                player_cards[player_cards.index(11)] = 1
+                print(f"Your current hand: {player_cards}")
+            elif sum(player_cards) > 21:
                 score_comparison(player_cards, computer_cards)
                 should_player_draw = False
             else:
@@ -60,10 +63,10 @@ def game():
         else:
             if 11 in player_cards and (sum(player_cards) > 21):
                 player_cards[player_cards.index(11)] = 1
-            if 11 in computer_cards and (sum(computer_cards) > 21):
-                computer_cards[computer_cards.index(11)] = 1
             while sum(computer_cards) < 17:
                 computer_cards.append(card_deal())
+                if 11 in computer_cards and (sum(computer_cards) > 21):
+                    computer_cards[computer_cards.index(11)] = 1
             score_comparison(player_cards, computer_cards)
             should_player_draw = False
 
